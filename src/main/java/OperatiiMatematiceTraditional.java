@@ -19,29 +19,25 @@ public class OperatiiMatematiceTraditional extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         HttpSession https = req.getSession();
-        switch(action) {
-
-            case "REGISTER":
-                String user=req.getParameter("user");
-                String pass=req.getParameter("password");
-                String email=req.getParameter("email");
-                https.setAttribute("keyUsername", user);
-                this.registerUser(user, pass, email);
-                ServletContext context = getServletContext();
-                RequestDispatcher dispatcher = context.getRequestDispatcher("/contulmeu.html");
-                dispatcher.forward(req, resp);
-                break;
-
-            case "FOLLOW":
+        if(action!=null && action.equals("REGISTER")) {
+            String user = req.getParameter("user");
+            String pass = req.getParameter("password");
+            String email = req.getParameter("email");
+            https.setAttribute("keyUsername", user);
+            this.registerUser(user, pass, email);
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher("/contulmeu.html");
+            dispatcher.forward(req, resp);
+        }
+        else
+        {
 
                  String username =(String) https.getAttribute("keyUsername");
 
                 String followers = req.getParameter("usersToFollow");
                 this.addUsers(username, followers);
-                break;
 
-            default:
-                System.out.println("NU CUNOSC ACTIUNEA: " + action);
+
         }
 
 
@@ -65,13 +61,13 @@ public class OperatiiMatematiceTraditional extends HttpServlet {
 
     protected void addUsers(String username, String followers) {
         DbOps user1 = new DbOps();
-//        try {
-//            user1.addFollowers(username, followers);
-//            // System.out.println("");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+       try {
+            user1.addFollowers(username, followers);
+            // System.out.println("");
+       } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }
     }
 }
