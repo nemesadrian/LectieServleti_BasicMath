@@ -105,8 +105,6 @@ public  class DbOps {
 
     public void AddPost (String usernamePost, String post) throws ClassNotFoundException, SQLException {
 
-
-
         System.out.println("incep add");
         // 1. load driver
         if (conn == null) {
@@ -150,4 +148,91 @@ public  class DbOps {
 
 
     }
+    public String viewUsers () throws ClassNotFoundException, SQLException {
+        System.out.println("incep vizualizarea");
+        // 1. load driver
+        if (conn == null) {
+            conn = getConnection();
+        } else {
+            System.out.println("----------------------deja am conex");
+        }
+        System.out.println("am obtinut conex");
+
+        // 4. create a query statement
+            Statement st = conn.createStatement();
+
+        //afisare toti userii
+        // 5. execute a query
+        String query = "SELECT username FROM users";
+        System.out.println("q read:" + query);
+        ResultSet rs = st.executeQuery(query);
+
+        // 6. iterate the result set and print the values
+        String listauseri = "";
+        while (rs.next()) {
+            listauseri += rs.getString("username").trim()+", ";
+            System.out.println("users="+listauseri);
+        }
+        return listauseri;
+    }
+
+
+    public long getUserID (String username) throws ClassNotFoundException, SQLException{
+        System.out.println("incep vizualizarea");
+        // 1. load driver
+        if (conn == null) {
+            conn = getConnection();
+        } else {
+            System.out.println("----------------------deja am conex");
+        }
+        System.out.println("am obtinut conex");
+
+        // 4. create a query statement
+        Statement st = conn.createStatement();
+
+        // 5. execute a query
+        String query = "SELECT id FROM users where username='"+ username+"'";
+        System.out.println("q read:" + query);
+        ResultSet rs = st.executeQuery(query);
+
+        // 6. iterate the result set and print the values
+        long iduser =0;
+        while (rs.next()) {
+            iduser = rs.getLong("id");
+            System.out.println("id="+iduser);
+        }
+        return iduser;
+    }
+
+
+
+    public void addFollowers ( String username, String followers)  throws ClassNotFoundException, SQLException {
+        String [] follovers_array = followers.split(",");
+
+
+
+        System.out.println("incep vizualizarea");
+        // 1. load driver
+        if (conn == null) {
+            conn = getConnection();
+        } else {
+            System.out.println("----------------------deja am conex");
+        }
+        System.out.println("am obtinut conex");
+
+        // 4. create a query statement
+        Statement st = conn.createStatement();
+
+
+        for (int i = 0; i<follovers_array.length; i++){
+            PreparedStatement pSt = conn.prepareStatement("INSERT INTO following (\"Follower\",\"Following\") VALUES (?,?)");
+            pSt.setLong(1, getUserID(username));
+            pSt.setLong(2, getUserID(follovers_array[i]));
+            int rowsInserted = pSt.executeUpdate();
+            System.out.println("userul "+getUserID(username)+" urmareste "+getUserID(follovers_array[i]));
+        }
+
+    }
+
+
 }

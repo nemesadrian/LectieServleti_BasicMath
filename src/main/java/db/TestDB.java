@@ -18,10 +18,22 @@ public class TestDB {
 //        }
 
 
+//        DbOps user1 = new DbOps();
+//        try {
+//            user1.AddPost("Flaviu", "ana are mere, noua ne iese");
+//            System.out.println("am adaugat o postare");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
         DbOps user1 = new DbOps();
+        String followers = "Flaviu,Adrian,ionel";
+        String username = "user1";
         try {
-            user1.AddPost("Flaviu", "ana are mere, noua ne iese");
-            System.out.println("am adaugat o postare");
+            user1.addFollowers(username, followers);
+            //System.out.println("acestia sunt utilizatorii");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
