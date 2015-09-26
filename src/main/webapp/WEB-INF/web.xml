@@ -26,5 +26,15 @@
         <url-pattern>/operatiiMatematiceAjax</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Posteaza</servlet-name>
+        <servlet-class>Posteaza</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Posteaza</servlet-name>
+        <url-pattern>/posteaza</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
