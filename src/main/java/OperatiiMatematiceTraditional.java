@@ -19,6 +19,12 @@ public class OperatiiMatematiceTraditional extends HttpServlet {
         String pass=req.getParameter("password");
         String email=req.getParameter("email");
 
+
+        // apel db
+
+
+
+
         out.println("<html>");
         out.println("<head>");
         out.println("<title>Calcule </title>");
