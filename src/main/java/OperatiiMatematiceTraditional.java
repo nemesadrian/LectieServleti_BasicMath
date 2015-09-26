@@ -31,18 +31,10 @@ public class OperatiiMatematiceTraditional extends HttpServlet {
         }
         else
         {
-
                  String username =(String) https.getAttribute("keyUsername");
-
                 String followers = req.getParameter("usersToFollow");
                 this.addUsers(username, followers);
-
-
         }
-
-
-
-
     }
 
     protected void registerUser(String user, String pass, String email) {
