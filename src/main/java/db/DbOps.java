@@ -102,4 +102,52 @@ public  class DbOps {
         // 3. obtain a connection
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
+
+    public void AddPost (String usernamePost, String post) throws ClassNotFoundException, SQLException {
+
+
+
+        System.out.println("incep add");
+        // 1. load driver
+        if (conn == null) {
+            conn = getConnection();
+        } else {
+            System.out.println("----------------------deja am conex");
+        }
+        System.out.println("am obtinut conex");
+
+        //selectare id in functie de username
+        // 4. create a query statement
+        Statement st = conn.createStatement();
+
+        // 5. execute a query
+        String query = "SELECT id FROM users where username='"+ usernamePost+"'";
+        System.out.println("q read:" + query);
+        ResultSet rs = st.executeQuery(query);
+
+        // 6. iterate the result set and print the values
+        long iduser =0;
+        while (rs.next()) {
+            iduser = rs.getLong("id");
+            System.out.println("id="+iduser);
+        }
+
+        // insert
+        PreparedStatement pSt = conn.prepareStatement("INSERT INTO messages (iduser,post, data) VALUES (?,?,now())");
+        pSt.setLong(1, iduser);
+        pSt.setString(2, post);
+
+
+
+        System.out.println("statement");
+        // 5. execute a prepared statement
+        int rowsInserted = pSt.executeUpdate();
+
+        System.out.println("executat add post");
+        // 6. close the objects
+        pSt.close();
+        System.out.println("gata add post");
+
+
+    }
 }
