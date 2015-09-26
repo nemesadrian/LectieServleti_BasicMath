@@ -17,11 +17,39 @@ import java.sql.SQLException;
 public class OperatiiMatematiceTraditional extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        HttpSession https = req.getSession();
+        switch(action) {
 
-        String user=req.getParameter("user");
-        String pass=req.getParameter("password");
-        String email=req.getParameter("email");
+            case "REGISTER":
+                String user=req.getParameter("user");
+                String pass=req.getParameter("password");
+                String email=req.getParameter("email");
+                https.setAttribute("keyUsername", user);
+                this.registerUser(user, pass, email);
+                ServletContext context = getServletContext();
+                RequestDispatcher dispatcher = context.getRequestDispatcher("/contulmeu.html");
+                dispatcher.forward(req, resp);
+                break;
 
+            case "FOLLOW":
+
+                 String username =(String) https.getAttribute("keyUsername");
+
+                String followers = req.getParameter("usersToFollow");
+                this.addUsers(username, followers);
+                break;
+
+            default:
+                System.out.println("NU CUNOSC ACTIUNEA: " + action);
+        }
+
+
+
+
+    }
+
+    protected void registerUser(String user, String pass, String email) {
 
         // apel db
         DbOps user1 = new DbOps();
@@ -33,15 +61,17 @@ public class OperatiiMatematiceTraditional extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
-        HttpSession https = req.getSession();
-        https.setAttribute("keyUsername", user);
-
-
-        ServletContext context = getServletContext();
-        RequestDispatcher dispatcher = context.getRequestDispatcher("/contulmeu.html");
-        dispatcher.forward(req,resp);
-
-
+    protected void addUsers(String username, String followers) {
+        DbOps user1 = new DbOps();
+//        try {
+//            user1.addFollowers(username, followers);
+//            // System.out.println("");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 }
