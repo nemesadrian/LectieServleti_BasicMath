@@ -15,25 +15,13 @@ public class OperatiiMatematiceTraditional extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out =resp.getWriter();
 
-        String sNr1=req.getParameter("nr1");
-        String sNr2=req.getParameter("nr2");
-        String sOp=req.getParameter("op");
+        String user=req.getParameter("user");
+        String pass=req.getParameter("password");
+        String email=req.getParameter("email");
 
-        int nr1=Integer.parseInt(sNr1);
-        int nr2=Integer.parseInt(sNr2);
-        double resultValue=0;
 
-        if(sOp.equals("1"))
-            resultValue=nr1+nr2;
-      else
-        if(sOp.equals("2"))
-            resultValue=nr1-nr2;
-        else
-        if(sOp.equals("3"))
-            resultValue=nr1*nr2;
-        else
-        if(sOp.equals("4"))
-            resultValue=(double)nr1/nr2;
+        // apel db
+
 
 
 
@@ -45,7 +33,7 @@ public class OperatiiMatematiceTraditional extends HttpServlet {
         out.println("<body>");
 
 
-        out.println("rezultatul este: <b>"+resultValue+"</b>");
+        out.println("Ai introdus: <b>" + user + "</br>" + pass + "</br>" + email + "</b>");
 
         out.close();
 
