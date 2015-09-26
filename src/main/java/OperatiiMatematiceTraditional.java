@@ -1,10 +1,13 @@
 
 import db.DbOps;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,9 +17,6 @@ import java.sql.SQLException;
 public class OperatiiMatematiceTraditional extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        resp.setContentType("text/html;charset=UTF-8");
-        PrintWriter out =resp.getWriter();
 
         String user=req.getParameter("user");
         String pass=req.getParameter("password");
@@ -34,22 +34,14 @@ public class OperatiiMatematiceTraditional extends HttpServlet {
             e.printStackTrace();
         }
 
+        HttpSession https = req.getSession();
+        https.setAttribute("keyUsername", user);
 
 
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Calcule </title>");
-        out.println("</head>");
-
-        out.println("<body>");
+        ServletContext context = getServletContext();
+        RequestDispatcher dispatcher = context.getRequestDispatcher("/contulmeu.html");
+        dispatcher.forward(req,resp);
 
 
-        out.println("Ai introdus: <b>" + user + "</br>" + pass + "</br>" + email + "</b>");
-
-        out.close();
-
-
-
-        out.println("</body>");
     }
 }
